@@ -1,6 +1,7 @@
 package com.example.gamescore;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     private int score1 = 0;
     private int score2 = 0;
 
+    private TextView counter1;
+    private TextView counter2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,30 +31,74 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Log.d("MainActivity", "onCreate");
+
+        counter1 = findViewById(R.id.textViewCounter1);
+        counter2 = findViewById(R.id.textViewCounter2);
+
         if(savedInstanceState != null) {
             score1 = savedInstanceState.getInt("score1");
             score2 = savedInstanceState.getInt("score2");
         }
 
-        TextView counter1 = findViewById(R.id.textViewCounter1);
-        TextView counter2 = findViewById(R.id.textViewCounter2);
-
-        counter1.setText(String.valueOf(score1));
-        counter2.setText(String.valueOf(score2));
+        updateScore1();
+        updateScore2();
 
         counter1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counter1.setText(String.valueOf(++score1));
+                Log.d("MainActivity", "Clicked score1");
+                score1++;
+                updateScore1();
             }
         });
 
         counter2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counter2.setText(String.valueOf(++score2));
+                Log.d("MainActivity", "Clicked score2");
+                score2++;
+                updateScore2();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("MainActivity", "onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("MainActivity", "onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("MainActivity", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("MainActivity", "onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d("MainActivity", "onRestart");
+        super.onRestart();
+    }
+
+    private void updateScore1(){
+        counter1.setText(String.valueOf(score1));
+    }
+
+    private void updateScore2(){
+        counter2.setText(String.valueOf(score2));
     }
 
     @Override
@@ -63,5 +111,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("MainActivity", "onDestroy");
     }
 }
